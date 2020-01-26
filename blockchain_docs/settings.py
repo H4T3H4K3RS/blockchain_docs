@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from web3 import Web3, HTTPProvider
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -26,7 +27,6 @@ SECRET_KEY = '87f+iq1b&%^@cv_w^t1)&jc=_7k=(npk(iaqh%m6!j9ujexmr!'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -70,7 +70,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blockchain_docs.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -80,7 +79,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -100,7 +98,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -114,8 +111,25 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+os.environ['WEB3_INFURA_PROJECT_ID'] = '2a66c76e59294895a68c9739378b720c'
+os.environ['WEB3_INFURA_PROJECT_SECRET'] = 'f403e4dd14494c04a8b3e59e1b6765a9'
+w3 = Web3(HTTPProvider('https://ropsten.infura.io/v3/2a66c76e59294895a68c9739378b720c'))
+ABI = [{"inputs": [], "payable": False, "stateMutability": "nonpayable", "type": "constructor"},
+       {"constant": False, "inputs": [{"internalType": "string", "name": "newmessage", "type": "string"}],
+        "name": "AddMessage", "outputs": [], "payable": True, "stateMutability": "payable", "type": "function"},
+       {"constant": True, "inputs": [], "name": "getAll",
+        "outputs": [{"internalType": "string[]", "name": "", "type": "string[]"}], "payable": False,
+        "stateMutability": "view", "type": "function"},
+       {"constant": True, "inputs": [{"internalType": "uint32", "name": "number", "type": "uint32"}],
+        "name": "getMessage", "outputs": [{"internalType": "string", "name": "", "type": "string"}], "payable": False,
+        "stateMutability": "view", "type": "function"}]
+main_contract = w3.eth.contract(
+    address="0x34eD0eae736759F6711DcfEdE9a3f56Adfd9A659",
+    abi=ABI
+)
+w3.eth.account = '0xB0329a4B11143e2f57F0238805E05dd96DD1eC5A'
+CloseWalletKey = "346F49626F65F952B52CEF5678F9B4AD1DD2B065226CB49579B06F67065789D6"
