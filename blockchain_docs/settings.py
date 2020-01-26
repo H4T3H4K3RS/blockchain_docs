@@ -118,18 +118,28 @@ STATIC_URL = '/static/'
 os.environ['WEB3_INFURA_PROJECT_ID'] = '2a66c76e59294895a68c9739378b720c'
 os.environ['WEB3_INFURA_PROJECT_SECRET'] = 'f403e4dd14494c04a8b3e59e1b6765a9'
 w3 = Web3(HTTPProvider('https://ropsten.infura.io/v3/2a66c76e59294895a68c9739378b720c'))
-ABI = [{"inputs": [], "payable": False, "stateMutability": "nonpayable", "type": "constructor"},
-       {"constant": False, "inputs": [{"internalType": "string", "name": "newmessage", "type": "string"}],
-        "name": "AddMessage", "outputs": [], "payable": True, "stateMutability": "payable", "type": "function"},
-       {"constant": True, "inputs": [], "name": "getAll",
-        "outputs": [{"internalType": "string[]", "name": "", "type": "string[]"}], "payable": False,
-        "stateMutability": "view", "type": "function"},
-       {"constant": True, "inputs": [{"internalType": "uint32", "name": "number", "type": "uint32"}],
-        "name": "getMessage", "outputs": [{"internalType": "string", "name": "", "type": "string"}], "payable": False,
-        "stateMutability": "view", "type": "function"}]
-main_contract = w3.eth.contract(
+Folder_ABI = [{"inputs": [], "payable": False, "stateMutability": "nonpayable", "type": "constructor"},
+              {"constant": False, "inputs": [{"internalType": "string", "name": "newmessage", "type": "string"}],
+               "name": "AddMessage", "outputs": [], "payable": True, "stateMutability": "payable", "type": "function"},
+              {"constant": True, "inputs": [], "name": "getAll",
+               "outputs": [{"internalType": "string[]", "name": "", "type": "string[]"}], "payable": False,
+               "stateMutability": "view", "type": "function"},
+              {"constant": True, "inputs": [{"internalType": "uint32", "name": "number", "type": "uint32"}],
+               "name": "getMessage", "outputs": [{"internalType": "string", "name": "", "type": "string"}],
+               "payable": False,
+               "stateMutability": "view", "type": "function"}]
+folder_contract = w3.eth.contract(
     address="0x34eD0eae736759F6711DcfEdE9a3f56Adfd9A659",
-    abi=ABI
+    abi=Folder_ABI
+)
+Message_ABI = [{"inputs": [{"internalType": "string", "name": "mymessage", "type": "string"}], "payable": False,
+                "stateMutability": "nonpayable", "type": "constructor"},
+               {"constant": True, "inputs": [], "name": "getMessage",
+                "outputs": [{"internalType": "string", "name": "", "type": "string"}], "payable": False,
+                "stateMutability": "view", "type": "function"}]
+message_contract = w3.eth.contract(
+    address="0xE92d478000dDc344D684B1B56dd4295B9510fF83",
+    abi=Message_ABI
 )
 w3.eth.account = '0xB0329a4B11143e2f57F0238805E05dd96DD1eC5A'
 CloseWalletKey = "346F49626F65F952B52CEF5678F9B4AD1DD2B065226CB49579B06F67065789D6"
